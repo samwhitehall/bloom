@@ -4,14 +4,19 @@ class Node:
         self.children = children or []
 
 class NonLeaf(Node):
-    pass
-
+    def __repr__(self):
+        pointers = ['.' if pointer else 'x' for pointer in self.children]
+        return 'k: %s\nc: %s' % (self.keys, str(pointers))
+        
 class Leaf(Node):
     def __init__(self, records, keys_per_node):
         blanks = keys_per_node - len(records)
 
         self.keys = [record[0] for record in records] + ([None] * blanks)
         self.children = [record[1] for record in records] + ([None] * blanks)
+
+    def __repr__(self):
+        return 'k: %s\nc: %s' % (self.keys, self.children)
 
 class Tree:
     def __init__(self, keys_per_node=4):
